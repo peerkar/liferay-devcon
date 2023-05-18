@@ -14,12 +14,13 @@ Workshop exercises require a running Liferay bundle and a demo site which is pro
 
 ### 1. Create a Blank Demo Site
 
-1. Download the site archive from *setup* folder
+1. Download the site archive Pages-20230518092441259.lar from the *setup* folder
 1. Go to *Control Panel -> Sites*
 1. Create a new Site "Blueprints Workshop" with the "Blank Site" template
 1. Go to the *Publishing -> Import* on the new site
 1. Create a new Import process
 1. Import the site archive
+1. Done
 
 ### 2. Create a Free IPStack Account
 
@@ -31,6 +32,7 @@ If you choose to register:
 1. Click 'Sign Up for Free'
 1. On the plan selection page, click 'Get Free API Key' on the 'Free Plan'
 1. Complete the registration
+1. Done
 
 The API key needed for the exercise can now be found on you account page.
 
