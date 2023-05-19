@@ -36,7 +36,7 @@ If you choose to register:
 
 ### 3. Configure IPStack service
 
-1. Go to *Control Panel -> System Settings -> Search Experiences -> IPStack
+1. Go to *Control Panel -> System Settings -> Search Experiences -> IPStack*
 1. Paste the API key, but don't enable the service yet
 1. Save the configuration
 1. Done
