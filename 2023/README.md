@@ -14,7 +14,7 @@ Workshop exercises require a running Liferay bundle and a demo site which is pro
 
 ### 1. Create a Blank Demo Site
 
-1. Download the site archive Pages-20230518092441259.lar from the *setup* folder
+1. Download the site archive Pages-20230519083947241.lar from the *setup* folder
 1. Go to *Control Panel -> Sites*
 1. Create a new Site "Blueprints Workshop" with the "Blank Site" template
 1. Go to the *Publishing -> Import* on the new site
