@@ -32,9 +32,14 @@ If you choose to register:
 1. Click 'Sign Up for Free'
 1. On the plan selection page, click 'Get Free API Key' on the 'Free Plan'
 1. Complete the registration
-1. Done
+1. Copy the API key from your account page
 
-The API key needed for the exercise can now be found on you account page.
+### 3. Enable IPStack service
+
+1. Go to *Control Panel -> System Settings -> Search Experiences -> IPStack
+1. Paste the API key, but don't enable the service yet
+1. Save the configuration
+1. Done
 
 ## Blueprint Conditions Cheatsheet
 
