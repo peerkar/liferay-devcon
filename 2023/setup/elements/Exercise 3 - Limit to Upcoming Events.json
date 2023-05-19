@@ -1,0 +1,34 @@
+{
+  "schemaVersion" : "1.0",
+  "title_i18n" : {
+    "en_US" : "Exercise 3 - Limit to Upcoming Events"
+  },
+  "description_i18n" : {
+    "en_US" : "Limit search to upcoming events"
+  },
+  "type" : 0,
+  "elementDefinition" : {
+    "uiConfiguration" : { },
+    "configuration" : {
+      "queryConfiguration" : {
+        "queryEntries" : [ {
+          "clauses" : [ {
+            "occur" : "filter",
+            "query" : {
+              "range" : {
+                "startTime_sortable" : {
+                  "include_lower" : true,
+                  "from" : "${time.current_date|date_format=timestamp}"
+                }
+              }
+            },
+            "context" : "query"
+          } ]
+        } ]
+      }
+    },
+    "icon" : "filter",
+    "category" : "DevCon 2023"
+  },
+  "externalReferenceCode" : "7768be1c-3653-19e0-637a-7914ee3585b8"
+}

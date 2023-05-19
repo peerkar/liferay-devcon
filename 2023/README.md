@@ -14,7 +14,7 @@ Workshop exercises require a running Liferay bundle and a demo site which is pro
 
 ### 1. Create a Blank Demo Site
 
-1. Download the site archive Pages-20230519083947241.lar from the *setup* folder
+1. Download the site archive Pages-20230519083947241.lar from the *setup/demo-site* folder
 1. Go to *Control Panel -> Sites*
 1. Create a new Site "Blueprints Workshop" with the "Blank Site" template
 1. Go to the *Publishing -> Import* on the new site
@@ -22,7 +22,16 @@ Workshop exercises require a running Liferay bundle and a demo site which is pro
 1. Import the site archive
 1. Done
 
-### 2. Create a Free IPStack Account
+
+### 2. Import the Elements
+
+1. Download the element JSONs from *setup/elements*
+1. Go to *Applications -> Blueprints*
+1. Go to *Elements* tab
+1. Import the 2 elements by clicking the menu icon on the top right of the screen (3 vertical dots)
+1. Done
+
+### 3. Create a Free IPStack Account
 
 IPStack offers a free plan, but registration is required. 
 
@@ -34,7 +43,7 @@ If you choose to register:
 1. Complete the registration
 1. Copy the API key from your account page
 
-### 3. Configure IPStack service
+### 4. Configure IPStack service
 
 1. Go to *Control Panel -> System Settings -> Search Experiences -> IPStack*
 1. Paste the API key, but don't enable the service yet
