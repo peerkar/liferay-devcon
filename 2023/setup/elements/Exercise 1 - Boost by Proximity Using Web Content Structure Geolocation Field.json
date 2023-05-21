@@ -1,7 +1,7 @@
 {
   "schemaVersion" : "1.0",
   "title_i18n" : {
-    "en_US" : "Exercise 1 - Boost Proximity Using the DDM Geolocation Field"
+    "en_US" : "Exercise 1 - Boost by Proximity Using Web Content Structure Geolocation Field"
   },
   "description_i18n" : {
     "en_US" : "Boosts by proximity using the nested DDM geolocation field"

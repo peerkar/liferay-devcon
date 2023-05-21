@@ -1,0 +1,55 @@
+{
+  "schemaVersion" : "1.0",
+  "title_i18n" : {
+    "en_US" : "Exercise 3 - Limit Search to My Content"
+  },
+  "description_i18n" : {
+    "en_US" : "Limits search to my contents. If using federated search, requires a custom parameter search.experiences.user.id, used as a backup in case user ID is 0"
+  },
+  "type" : 0,
+  "elementDefinition" : {
+    "uiConfiguration" : { },
+    "configuration" : {
+      "queryConfiguration" : {
+        "queryEntries" : [ {
+          "condition" : {
+            "equals" : {
+              "parameterName" : "user.id",
+              "value" : 0
+            }
+          },
+          "clauses" : [ {
+            "occur" : "filter",
+            "query" : {
+              "term" : {
+                "userId" : "${search.experiences.user.id}"
+              }
+            },
+            "context" : "query"
+          } ]
+        }, {
+          "condition" : {
+            "not" : {
+              "equals" : {
+                "parameterName" : "user.id",
+                "value" : 0
+              }
+            }
+          },
+          "clauses" : [ {
+            "occur" : "filter",
+            "query" : {
+              "term" : {
+                "userId" : "${user.id}"
+              }
+            },
+            "context" : "query"
+          } ]
+        } ]
+      }
+    },
+    "icon" : "filter",
+    "category" : "DevCon 2023"
+  },
+  "externalReferenceCode" : "e6673f2a-c41a-9159-8fea-26364df76d6c"
+}

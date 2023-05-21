@@ -1,0 +1,65 @@
+{
+  "schemaVersion" : "1.0",
+  "title_i18n" : {
+    "en_US" : "Exercise 3 - My News"
+  },
+  "description_i18n" : {
+    "en_US" : "Search for items matching user's categories"
+  },
+  "type" : 0,
+  "elementDefinition" : {
+    "uiConfiguration" : { },
+    "configuration" : {
+      "queryConfiguration" : {
+        "queryEntries" : [ {
+          "condition" : {
+            "exists" : {
+              "parameterName" : "user.asset_category_ids"
+            }
+          },
+          "clauses" : [ {
+            "occur" : "filter",
+            "query" : {
+              "bool" : {
+                "must" : [ {
+                  "term" : {
+                    "assetCategoryIds" : {
+                      "value" : "${user.asset_category_ids}"
+                    }
+                  }
+                } ]
+              }
+            },
+            "context" : "query"
+          } ]
+        }, {
+          "condition" : {
+            "not" : {
+              "exists" : {
+                "parameterName" : "user.asset_category_ids"
+              }
+            }
+          },
+          "clauses" : [ {
+            "occur" : "filter",
+            "query" : {
+              "bool" : {
+                "must" : [ {
+                  "term" : {
+                    "assetCategoryIds" : {
+                      "value" : 0
+                    }
+                  }
+                } ]
+              }
+            },
+            "context" : "query"
+          } ]
+        } ]
+      }
+    },
+    "icon" : "filter",
+    "category" : "DevCon 2023"
+  },
+  "externalReferenceCode" : "a7cc9914-3da3-998e-da7b-c0ef4b68fd7c"
+}
