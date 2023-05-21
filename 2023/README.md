@@ -2,11 +2,13 @@
 
 Resources and sample codes to the workshop on 25th May 2023.
 
-If you'll be attending the workshop and wish to do the exercises, please follow the instructions below and prefably set up the environment in advance of the workshop.
+If you'll be attending the workshop and wish to do the exercises, please follow the instructions below set up the environment in advance of the workshop. Setup will take ~ 5-10 mins.
+
+During the workshop we won't be able to do the setup because of limited time.
 
 ## Workshop Setup Instructions
 
-Workshop exercises require a running Liferay bundle and a demo site which is provided as an importable archive. Registration to IPStack geolocation service is required to finish one of the exercises.
+The exercises require a running Liferay bundle and a demo site which is provided as an importable archive. Registration to IPStack geolocation service is required for one of the exercises.
 
 ### Prerequisites
 
@@ -14,9 +16,9 @@ Workshop exercises require a running Liferay bundle and a demo site which is pro
 
 ### 1. Create a Blank Demo Site
 
-1. Download the site archive Pages-20230519083947241.lar from the *setup/demo-site* folder
+1. Download the site archive Pages-20230521205716035.lar from the *setup/demo-site* folder
 1. Go to *Control Panel -> Sites*
-1. Create a new Site "Blueprints Workshop" with the "Blank Site" template
+1. Create a new Site "University of Blueprints" with the "Blank Site" template
 1. Go to the *Publishing -> Import* on the new site
 1. Create a new Import process
 1. Import the site archive
@@ -28,10 +30,17 @@ Workshop exercises require a running Liferay bundle and a demo site which is pro
 1. Download the element JSONs from *setup/elements*
 1. Go to *Applications -> Blueprints*
 1. Go to *Elements* tab
-1. Import the 2 elements by clicking the menu icon on the top right of the screen (3 vertical dots)
+1. Import the elements one by one by clicking the menu icon on the top right of the screen (3 vertical dots)
 1. Done
 
-### 3. Create a Free IPStack Account
+### 3. Import the Blueprints
+
+1. Download the element JSONs from *setup/blueprints*
+1. Go to *Applications -> Blueprints*
+1. Import the Blueprints one by one by clicking the menu icon on the top right of the screen (3 vertical dots)
+1. Done
+
+### 4. Create a Free IPStack Account
 
 IPStack offers a free plan, but registration is required. 
 
@@ -43,12 +52,19 @@ If you choose to register:
 1. Complete the registration
 1. Copy the API key from your account page
 
-### 4. Configure IPStack service
+### 5. Configure IPStack service
 
 1. Go to *Control Panel -> System Settings -> Search Experiences -> IPStack*
 1. Paste the API key, but don't enable the service yet
 1. Save the configuration
 1. Done
+
+### 6. Modify the Portal User Account
+
+1. Go to your portal bundle user account settings
+1. In the categorization, add *Porto* from *Campus* vocabulary
+1. Add *Staff* from *Target Group* vocabulary
+1. Save 
 
 ## Blueprint Conditions Cheatsheet
 
