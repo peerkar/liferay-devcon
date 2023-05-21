@@ -24,8 +24,12 @@ The exercises require a running Liferay bundle and a demo site which is provided
 1. Import the site archive
 1. Done
 
+### 2. Install the Blueprint Parameter Contributor
 
-### 2. Import the Elements
+1. Download module com.liferay.devcon.workshop.custom.blueprint.parameter.contributor.jar from the *setup* folder
+2. Deploy to the bundle
+
+### 3. Import the Elements
 
 1. Download the element JSONs from *setup/elements*
 1. Go to *Applications -> Blueprints*
@@ -33,14 +37,14 @@ The exercises require a running Liferay bundle and a demo site which is provided
 1. Import the elements one by one by clicking the menu icon on the top right of the screen (3 vertical dots)
 1. Done
 
-### 3. Import the Blueprints
+### 4. Import the Blueprints
 
 1. Download the element JSONs from *setup/blueprints*
 1. Go to *Applications -> Blueprints*
 1. Import the Blueprints one by one by clicking the menu icon on the top right of the screen (3 vertical dots)
 1. Done
 
-### 4. Create a Free IPStack Account
+### 5. Create a Free IPStack Account
 
 IPStack offers a free plan, but registration is required. 
 
@@ -52,19 +56,21 @@ If you choose to register:
 1. Complete the registration
 1. Copy the API key from your account page
 
-### 5. Configure IPStack service
+### 6. Configure IPStack service
 
 1. Go to *Control Panel -> System Settings -> Search Experiences -> IPStack*
 1. Paste the API key, but don't enable the service yet
 1. Save the configuration
 1. Done
 
-### 6. Modify the Portal User Account
+### 7. Modify the Portal User Account
 
 1. Go to your portal bundle user account settings
 1. In the categorization, add *Porto* from *Campus* vocabulary
 1. Add *Staff* from *Target Group* vocabulary
 1. Save 
+
+
 
 ## Blueprint Conditions Cheatsheet
 
