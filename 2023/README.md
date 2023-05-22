@@ -14,11 +14,11 @@ The exercises require a running Liferay bundle and a demo site which is provided
 
 1. A running Liferay DXP 7.4 U73+ bundle
 
-### 1. Create a Blank Demo Site
+### 1. Create the Demo Site
 
 1. Download the site archive Pages-20230521205716035.lar from the *setup/demo-site* folder
 1. Go to *Control Panel -> Sites*
-1. Create a new Site "University of Blueprints" with the "Blank Site" template
+1. Create a new Site "University of Blueprints" from the "Blank Site" template
 1. Go to the *Publishing -> Import* on the new site
 1. Create a new Import process
 1. Import the site archive
@@ -26,8 +26,10 @@ The exercises require a running Liferay bundle and a demo site which is provided
 
 ### 2. Install the Blueprint Parameter Contributor
 
-1. Download module com.liferay.devcon.workshop.custom.blueprint.parameter.contributor.jar from the *setup* folder
+1. Download module *com.liferay.devcon.workshop.custom.blueprint.parameter.contributor.jar* from the *setup* folder
 2. Deploy to the bundle
+
+This module is used in demonstrating custom parameters.
 
 ### 3. Import the Elements
 
@@ -63,7 +65,7 @@ If you choose to register:
 1. Save the configuration
 1. Done
 
-### 7. Modify the Portal User Account
+### 7. Modify Your Portal User Account
 
 1. Go to your portal bundle user account settings
 1. In the categorization, add *Porto* from *Campus* vocabulary
