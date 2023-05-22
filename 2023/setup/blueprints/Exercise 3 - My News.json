@@ -27,21 +27,67 @@
   },
   "elementInstances" : [ {
     "sxpElement" : {
+      "schemaVersion" : "1.0",
       "title_i18n" : {
-        "en_US" : "Exercise 3 - My News"
+        "en-US" : "Exercise 3 - My News"
       },
+      "description" : "Search for items matching user's categories",
+      "readOnly" : false,
+      "title" : "Exercise 3 - My News",
+      "type" : 0,
+      "userName" : "Test Test",
+      "version" : "1.5",
+      "externalReferenceCode" : "a7cc9914-3da3-998e-da7b-c0ef4b68fd7c",
       "description_i18n" : {
-        "en_US" : "Search news matching users categories"
+        "en-US" : "Search for items matching user's categories"
       },
+      "modifiedDate" : "2023-05-21T21:32:42Z",
+      "id" : 201,
+      "createDate" : "2023-05-20T13:49:59Z",
       "elementDefinition" : {
+        "uiConfiguration" : { },
         "configuration" : {
           "queryConfiguration" : {
             "queryEntries" : [ {
+              "condition" : {
+                "exists" : {
+                  "parameterName" : "user.asset_category_ids"
+                }
+              },
               "clauses" : [ {
                 "occur" : "filter",
                 "query" : {
-                  "terms" : {
-                    "assetCategoryIds" : "${user.asset_category_ids}"
+                  "bool" : {
+                    "must" : [ {
+                      "term" : {
+                        "assetCategoryIds" : {
+                          "value" : "${user.asset_category_ids}"
+                        }
+                      }
+                    } ]
+                  }
+                },
+                "context" : "query"
+              } ]
+            }, {
+              "condition" : {
+                "not" : {
+                  "exists" : {
+                    "parameterName" : "user.asset_category_ids"
+                  }
+                }
+              },
+              "clauses" : [ {
+                "occur" : "filter",
+                "query" : {
+                  "bool" : {
+                    "must" : [ {
+                      "term" : {
+                        "assetCategoryIds" : {
+                          "value" : 0
+                        }
+                      }
+                    } ]
                   }
                 },
                 "context" : "query"
@@ -56,11 +102,45 @@
     "configurationEntry" : {
       "queryConfiguration" : {
         "queryEntries" : [ {
+          "condition" : {
+            "exists" : {
+              "parameterName" : "user.asset_category_ids"
+            }
+          },
           "clauses" : [ {
             "occur" : "filter",
             "query" : {
-              "terms" : {
-                "assetCategoryIds" : "${user.asset_category_ids}"
+              "bool" : {
+                "must" : [ {
+                  "term" : {
+                    "assetCategoryIds" : {
+                      "value" : "${user.asset_category_ids}"
+                    }
+                  }
+                } ]
+              }
+            },
+            "context" : "query"
+          } ]
+        }, {
+          "condition" : {
+            "not" : {
+              "exists" : {
+                "parameterName" : "user.asset_category_ids"
+              }
+            }
+          },
+          "clauses" : [ {
+            "occur" : "filter",
+            "query" : {
+              "bool" : {
+                "must" : [ {
+                  "term" : {
+                    "assetCategoryIds" : {
+                      "value" : 0
+                    }
+                  }
+                } ]
               }
             },
             "context" : "query"
@@ -68,9 +148,7 @@
         } ]
       }
     },
-    "uiConfigurationValues" : {
-      "sxpElement" : "{\n  \"description_i18n\": {\n    \"en_US\": \"Search news matching users categories\"\n  },\n  \"elementDefinition\": {\n    \"category\": \"DevCon 2023\",\n    \"configuration\": {\n      \"queryConfiguration\": {\n        \"queryEntries\": [\n          {\n            \"clauses\": [\n              {\n                \"context\": \"query\",\n                \"occur\": \"filter\",\n                \"query\": {\n                  \"terms\": {\n                    \"assetCategoryIds\": \n                     \"${user.asset_category_ids}\"\n                  }\n                }\n              }\n            ]\n           \n          }\n        ]\n      }\n    },\n    \"icon\": \"filter\"\n  },\n  \"title_i18n\": {\n    \"en_US\": \"Exercise 3 - My News\"\n  }\n}"
-    }
+    "uiConfigurationValues" : { }
   } ],
   "externalReferenceCode" : "3d37c62f-568f-17b6-bf23-026c0cc20f48"
 }
