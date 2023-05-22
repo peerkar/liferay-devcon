@@ -13,9 +13,8 @@
       "queryConfiguration" : {
         "queryEntries" : [ {
           "condition" : {
-            "equals" : {
-              "parameterName" : "user.id",
-              "value" : 0
+            "exists" : {
+              "parameterName" : "search.experiences.user.id"
             }
           },
           "clauses" : [ {
