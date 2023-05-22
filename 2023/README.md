@@ -6,6 +6,9 @@ If you'll be attending the workshop and wish to do the exercises, please follow 
 
 During the workshop we won't be able to do the setup because of limited time.
 
+**Important:** Workshop instructions and demo data updated on 22nd May. If you imported the data before, please update to the latest version. Sorry for the inconvenience!
+
+
 ## Workshop Setup Instructions
 
 The exercises require a running Liferay bundle and a demo site which is provided as an importable archive. Registration to IPStack geolocation service is required for one of the exercises.
