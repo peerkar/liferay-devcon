@@ -77,7 +77,7 @@ If you choose to register:
 
 
 
-## Blueprint Conditions Cheatsheet
+## Conditions Cheatsheet
 
 Conditions are a way to make Blueprint elements conditional with the help of parameters available in the Blueprint context. The available, standard parameters can be listed in the side panel of Element editor. 
 
@@ -104,7 +104,7 @@ The structure of an element:
 	   "title_i18n": {}
 	 }
   
-See more examples in the [OOTB element definitions](https://github.com/liferay/liferay-portal/tree/master/modules/dxp/apps/search-experiences/search-experiences-service/src/main/resources/com/liferay/search/experiences/internal/model/listener/dependencies)
+See [OOTB element definitions](https://github.com/liferay/liferay-portal/tree/master/modules/dxp/apps/search-experiences/search-experiences-service/src/main/resources/com/liferay/search/experiences/internal/model/listener/dependencies) for more examples.
 
 ### allConditions 
 All the conditions have to match.
@@ -154,7 +154,7 @@ At least one of the conditions in the group has to match.
 
 **Examples:**
 
-###contains
+### contains
 Checks whether the array value contains the given value or one of the given values.
 
 **Examples:**
@@ -177,7 +177,7 @@ Checks whether the array value contains the given value or one of the given valu
 }
 ```
 
-###equals
+### equals
 **Examples:**
 
 ```
