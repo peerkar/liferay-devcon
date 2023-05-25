@@ -2,12 +2,13 @@
 
 Resources and sample codes to the workshop on 25th May 2023.
 
-If you'll be attending the workshop and wish to do the exercises, please follow the instructions below set up the environment in advance of the workshop. Setup will take ~ 5-10 mins.
+The slide deck is available in *slides* folder and the exercise website solution LAR in the *solutions* folder. One wrong federated search key causing an issue in the worksgop is fixed in the solution.
 
-During the workshop we won't be able to do the setup because of limited time.
+Steps required after importing it:
 
-**Important:** Workshop instructions and demo data updated on 22nd May. If you imported the data before, please update to the latest version. Sorry for the inconvenience!
-
+1. Search page: (Re)select the Blueprint in the Blueprint Options widget to match to your systems instance
+1. Dashboard page: Reselect Blueprints
+1. Update the asset category IDs and segments entry IDs in the exercise Blueprints
 
 ## Workshop Setup Instructions
 
