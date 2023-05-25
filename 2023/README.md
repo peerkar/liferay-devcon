@@ -2,10 +2,13 @@
 
 Resources and sample codes to the workshop on 25th May 2023.
 
+## Slide Deck and Solution Website
+
 The slide deck is available in *slides* folder and the exercise website solution LAR in the *solutions* folder. One wrong federated search key causing an issue in the worksgop is fixed in the solution.
 
 Steps required after importing it:
 
+1. Do the steps in "Workshop Setup Instructions" from step 3, unless done already
 1. Search page: (Re)select the Blueprint in the Blueprint Options widget to match to your systems instance
 1. Dashboard page: Reselect Blueprints
 1. Update the asset category IDs and segments entry IDs in the exercise Blueprints
