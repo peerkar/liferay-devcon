@@ -1,0 +1,137 @@
+{
+  "schemaVersion" : "1.0",
+  "title_i18n" : {
+    "en_US" : "rescore-by-text-embedding"
+  },
+  "description_i18n" : {
+    "en_US" : "rescore-by-text-embedding-description"
+  },
+  "fallbackDescription" : "rescore-by-text-embedding-description",
+  "fallbackTitle" : "rescore-by-text-embedding",
+  "type" : 0,
+  "elementDefinition" : {
+    "uiConfiguration" : {
+      "fieldSets" : [ {
+        "fields" : [ {
+          "defaultValue" : 10,
+          "name" : "boost",
+          "typeOptions" : {
+            "min" : 0
+          },
+          "label" : "boost",
+          "type" : "number"
+        }, {
+          "helpText" : "min-score-field-help",
+          "defaultValue" : 1,
+          "name" : "min_score",
+          "typeOptions" : {
+            "min" : 0
+          },
+          "label" : "min-score",
+          "type" : "number"
+        }, {
+          "helpText" : "query-weight-field-help",
+          "defaultValue" : 0.01,
+          "name" : "query_weight",
+          "typeOptions" : {
+            "min" : 0.01,
+            "step" : 0.1
+          },
+          "label" : "query-weight",
+          "type" : "slider"
+        }, {
+          "helpText" : "rescore-query-weight-field-help",
+          "defaultValue" : 10,
+          "name" : "rescore_query_weight",
+          "typeOptions" : {
+            "min" : 0.01,
+            "step" : 0.1
+          },
+          "label" : "rescore-query-weight",
+          "type" : "slider"
+        }, {
+          "helpText" : "score-mode-field-help",
+          "defaultValue" : "avg",
+          "name" : "score_mode",
+          "typeOptions" : {
+            "nullable" : false,
+            "options" : [ {
+              "label" : "Average",
+              "value" : "avg"
+            }, {
+              "label" : "Max",
+              "value" : "max"
+            }, {
+              "label" : "Min",
+              "value" : "min"
+            }, {
+              "label" : "Multiply",
+              "value" : "multiply"
+            }, {
+              "label" : "Total",
+              "value" : "total"
+            } ]
+          },
+          "label" : "score-mode",
+          "type" : "select"
+        }, {
+          "helpText" : "rescore-window-size-field-help",
+          "defaultValue" : 50,
+          "name" : "window_size",
+          "typeOptions" : {
+            "min" : 1
+          },
+          "label" : "rescore-window-size",
+          "type" : "number"
+        } ]
+      } ]
+    },
+    "configuration" : {
+      "queryConfiguration" : {
+        "queryEntries" : [ {
+          "condition" : {
+            "exists" : {
+              "parameterName" : "keywords"
+            }
+          },
+          "rescores" : [ {
+            "queryWeight" : "${configuration.query_weight}",
+            "rescoreQueryWeight" : "${configuration.rescore_query_weight}",
+            "windowSize" : "${configuration.window_size}",
+            "query" : {
+              "script_score" : {
+                "query" : {
+                  "bool" : {
+                    "filter" : [ {
+                      "exists" : {
+                        "field" : "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}"
+                      }
+                    } ],
+                    "must" : [ {
+                      "match_all" : { }
+                    } ]
+                  }
+                },
+                "boost" : "${configuration.boost}",
+                "min_score" : "${configuration.min_score}",
+                "script" : {
+                  "source" : "knn_score",
+                  "lang" : "knn",
+                  "params" : {
+                    "field" : "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}",
+                    "space_type" : "cosinesimil",
+                    "query_value" : "${ml.text_embeddings.keywords_embedding}"
+                  }
+                }
+              }
+            },
+            "scoreMode" : "${configuration.score_mode}"
+          } ]
+        } ]
+      }
+    },
+    "icon" : "custom-field",
+    "category" : "semantic search"
+  },
+  "externalReferenceCode" : "e364323c-d35d-be5f-5890-233cb452ee35"
+}

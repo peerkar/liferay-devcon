@@ -1,0 +1,206 @@
+{
+  "schemaVersion" : "1.0",
+  "title_i18n" : {
+    "en_US" : "Search By Text Embedding"
+  },
+  "description_i18n" : {
+    "en_US" : "Search by text embedding."
+  },
+  "fallbackDescription" : "Enables semantic search for the selected asset types. Only Web Contents, Blogs, Knowledge Base Articles, Message Board Messages and Wiki Pages are currently supported. The vector dimensions have to match the dimensions set in the Search Experiences Sentence Transformer Configuration.",
+  "fallbackTitle" : "Search By Sentence Embedding",
+  "type" : 0,
+  "elementDefinition" : {
+    "uiConfiguration" : {
+      "fieldSets" : [ {
+        "fields" : [ {
+          "name" : "entry_class_names",
+          "label" : "Entry Class Names",
+          "type" : "multiselect"
+        }, {
+          "defaultValue" : 1,
+          "name" : "boost",
+          "typeOptions" : {
+            "min" : 0
+          },
+          "label" : "Boost",
+          "type" : "number"
+        }, {
+          "defaultValue" : 1.5,
+          "name" : "min_score",
+          "typeOptions" : {
+            "min" : 0
+          },
+          "label" : "Min Score",
+          "type" : "number"
+        }, {
+          "helpText" : "Specify the vector function for measuring similarity between the text embeddings of the search keywords and target documents. Check the model's documentation for suitability.",
+          "defaultValue" : "cosineSimilarity",
+          "name" : "vector_field_function",
+          "typeOptions" : {
+            "nullable" : false,
+            "options" : [ {
+              "label" : "Cosine Similarity",
+              "value" : "cosineSimilarity"
+            }, {
+              "label" : "Dot Product",
+              "value" : "dotProduct"
+            } ]
+          },
+          "label" : "Vector Field Function",
+          "type" : "select"
+        } ]
+      } ]
+    },
+    "configuration" : {
+      "queryConfiguration" : {
+        "queryEntries" : [ {
+          "condition" : {
+            "exists" : {
+              "parameterName" : "keywords"
+            }
+          },
+          "clauses" : [ {
+            "occur" : "must",
+            "query" : {
+              "script_score" : {
+                "query" : {
+                  "bool" : {
+                    "filter" : [ {
+                      "bool" : {
+                        "should" : [ {
+                          "bool" : {
+                            "must_not" : [ {
+                              "exists" : {
+                                "field" : "hidden"
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "must" : [ {
+                              "term" : {
+                                "hidden" : false
+                              }
+                            } ]
+                          }
+                        } ]
+                      }
+                    }, {
+                      "bool" : {
+                        "should" : [ {
+                          "bool" : {
+                            "must_not" : [ {
+                              "exists" : {
+                                "field" : "displayDate"
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "must_not" : [ {
+                              "exists" : {
+                                "field" : "expirationDate"
+                              }
+                            } ],
+                            "must" : [ {
+                              "range" : {
+                                "displayDate_sortable" : {
+                                  "include_lower" : true,
+                                  "include_upper" : true,
+                                  "from" : "-9223372036854775808",
+                                  "to" : "${time.current_date|date_format=timestamp}"
+                                }
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "must" : [ {
+                              "range" : {
+                                "displayDate_sortable" : {
+                                  "include_lower" : true,
+                                  "include_upper" : true,
+                                  "from" : "-9223372036854775808",
+                                  "to" : "${time.current_date|date_format=timestamp}"
+                                }
+                              }
+                            }, {
+                              "range" : {
+                                "expirationDate_sortable" : {
+                                  "include_lower" : true,
+                                  "include_upper" : true,
+                                  "from" : "${time.current_date|date_format=timestamp}",
+                                  "to" : "9223372036854775807"
+                                }
+                              }
+                            } ]
+                          }
+                        } ]
+                      }
+                    }, {
+                      "bool" : {
+                        "should" : [ {
+                          "bool" : {
+                            "must_not" : [ {
+                              "term" : {
+                                "entryClassName" : {
+                                  "value" : "com.liferay.journal.model.JournalArticle"
+                                }
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "must" : [ {
+                              "term" : {
+                                "entryClassName" : {
+                                  "value" : "com.liferay.journal.model.JournalArticle"
+                                }
+                              }
+                            }, {
+                              "term" : {
+                                "head" : {
+                                  "value" : true
+                                }
+                              }
+                            } ]
+                          }
+                        } ]
+                      }
+                    }, {
+                      "terms" : {
+                        "entryClassName" : [ "com.liferay.journal.model.JournalArticle" ]
+                      }
+                    }, {
+                      "term" : {
+                        "status" : {
+                          "value" : 0
+                        }
+                      }
+                    }, {
+                      "exists" : {
+                        "field" : "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}"
+                      }
+                    } ]
+                  }
+                },
+                "boost" : 1,
+                "min_score" : 1.5,
+                "script" : {
+                  "source" : "cosineSimilarity(params.query_vector, 'text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}')  + 1.0",
+                  "params" : {
+                    "query_vector" : "${ml.text_embeddings.keywords_embedding}"
+                  }
+                }
+              }
+            },
+            "context" : "query"
+          } ]
+        } ]
+      }
+    },
+    "icon" : "custom-field",
+    "category" : "semantic search"
+  },
+  "externalReferenceCode" : "56c2ce12-2fa6-9c32-19ee-5b03d833f58e"
+}
