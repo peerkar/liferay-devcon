@@ -6,8 +6,8 @@
   "description_i18n" : {
     "en_US" : "Search by text embedding."
   },
-  "fallbackDescription" : "Enables semantic search for the selected asset types. Only Web Contents, Blogs, Knowledge Base Articles, Message Board Messages and Wiki Pages are currently supported. The vector dimensions have to match the dimensions set in the Search Experiences Sentence Transformer Configuration.",
-  "fallbackTitle" : "Search By Sentence Embedding",
+  "fallbackDescription" : "",
+  "fallbackTitle" : "Semantic",
   "type" : 0,
   "elementDefinition" : {
     "uiConfiguration" : {
@@ -169,7 +169,7 @@
                       }
                     }, {
                       "terms" : {
-                        "entryClassName" : [ "com.liferay.journal.model.JournalArticle" ]
+                        "entryClassName" : "${configuration.entry_class_names}"
                       }
                     }, {
                       "term" : {
@@ -184,10 +184,10 @@
                     } ]
                   }
                 },
-                "boost" : 1,
-                "min_score" : 1.5,
+                "boost" : "${configuration.boost}",
+                "min_score" : "${configuration.min_score}",
                 "script" : {
-                  "source" : "cosineSimilarity(params.query_vector, 'text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}')  + 1.0",
+                  "source" : "${configuration.vector_field_function}(params.query_vector, 'text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}') + 1.0",
                   "params" : {
                     "query_vector" : "${ml.text_embeddings.keywords_embedding}"
                   }
@@ -202,5 +202,5 @@
     "icon" : "custom-field",
     "category" : "semantic search"
   },
-  "externalReferenceCode" : "56c2ce12-2fa6-9c32-19ee-5b03d833f58e"
+  "externalReferenceCode" : "2744109b-e687-5987-d1eb-cebc8b647194"
 }
