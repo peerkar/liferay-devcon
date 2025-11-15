@@ -1,0 +1,616 @@
+{
+  "schemaVersion" : "1.1",
+  "title_i18n" : {
+    "en_US" : "Hybrid"
+  },
+  "configuration" : {
+    "highlightConfiguration" : { },
+    "indexConfiguration" : {
+      "external" : false,
+      "indexName" : ""
+    },
+    "parameterConfiguration" : { },
+    "aggregationConfiguration" : { },
+    "generalConfiguration" : {
+      "searchableAssetTypes" : [ ],
+      "clauseContributorsExcludes" : [ "*" ],
+      "clauseContributorsIncludes" : [ ]
+    },
+    "advancedConfiguration" : { },
+    "sortConfiguration" : { },
+    "queryConfiguration" : {
+      "applyIndexerClauses" : false
+    }
+  },
+  "description_i18n" : {
+    "en_US" : "This is the demonstating hybrid semantic search approach. We disable the system generated clauses, but add own custom ones to force keyword matching on the content field."
+  },
+  "elementInstances" : [ {
+    "sxpElement" : {
+      "schemaVersion" : "1.0",
+      "title_i18n" : {
+        "en-US" : "text-match-over-multiple-fields"
+      },
+      "description" : "Search for a text match over multiple text fields.",
+      "readOnly" : true,
+      "title" : "Text Match Over Multiple Fields",
+      "type" : 0,
+      "userName" : "",
+      "version" : "1.0",
+      "externalReferenceCode" : "TEXT_MATCH_OVER_MULTIPLE_FIELDS",
+      "description_i18n" : {
+        "en-US" : "text-match-over-multiple-fields-description"
+      },
+      "modifiedDate" : "2024-11-09T15:20:04Z",
+      "id" : 38,
+      "createDate" : "2024-11-09T15:20:04Z",
+      "elementDefinition" : {
+        "uiConfiguration" : {
+          "fieldSets" : [ {
+            "fields" : [ {
+              "labelLocalized" : "Fields",
+              "name" : "fields",
+              "typeOptions" : {
+                "boost" : true
+              },
+              "fieldMappings" : [ {
+                "field" : "localized_title",
+                "boost" : 2.0,
+                "locale" : "${context.language_id}"
+              }, {
+                "field" : "content",
+                "boost" : 1.0,
+                "locale" : "${context.language_id}"
+              } ],
+              "label" : "fields",
+              "type" : "fieldMappingList"
+            }, {
+              "labelLocalized" : "Operator",
+              "defaultValue" : "or",
+              "name" : "operator",
+              "typeOptions" : {
+                "options" : [ {
+                  "label" : "OR",
+                  "value" : "or"
+                }, {
+                  "label" : "AND",
+                  "value" : "and"
+                } ]
+              },
+              "label" : "operator",
+              "type" : "select"
+            }, {
+              "labelLocalized" : "Match Type",
+              "defaultValue" : "best_fields",
+              "name" : "type",
+              "typeOptions" : {
+                "options" : [ {
+                  "label" : "Best Fields",
+                  "value" : "best_fields"
+                }, {
+                  "label" : "Most Fields",
+                  "value" : "most_fields"
+                }, {
+                  "label" : "Cross Fields",
+                  "value" : "cross_fields"
+                }, {
+                  "label" : "Phrase",
+                  "value" : "phrase"
+                }, {
+                  "label" : "Phrase Prefix",
+                  "value" : "phrase_prefix"
+                }, {
+                  "label" : "Boolean Prefix",
+                  "value" : "bool_prefix"
+                } ]
+              },
+              "label" : "match-type",
+              "type" : "select"
+            }, {
+              "helpTextLocalized" : "Only use fuzziness with the following match types: best fields, bool prefix, and most fields.",
+              "helpText" : "fuzziness-field-help",
+              "labelLocalized" : "Fuzziness",
+              "defaultValue" : "AUTO",
+              "name" : "fuzziness",
+              "typeOptions" : {
+                "nullable" : true,
+                "options" : [ {
+                  "label" : "Auto",
+                  "value" : "AUTO"
+                }, {
+                  "label" : "0",
+                  "value" : "0"
+                }, {
+                  "label" : "1",
+                  "value" : "1"
+                }, {
+                  "label" : "2",
+                  "value" : "2"
+                } ]
+              },
+              "label" : "fuzziness",
+              "type" : "select"
+            }, {
+              "labelLocalized" : "Minimum Should Match",
+              "defaultValue" : "0",
+              "name" : "minimum_should_match",
+              "typeOptions" : {
+                "nullable" : true
+              },
+              "label" : "min-should-match",
+              "type" : "text"
+            }, {
+              "helpTextLocalized" : "Only use slop with the following match types: phrase and phrase prefix.",
+              "helpText" : "slop-field-help",
+              "labelLocalized" : "Slop",
+              "defaultValue" : "",
+              "name" : "slop",
+              "typeOptions" : {
+                "min" : 0,
+                "nullable" : true,
+                "step" : 1
+              },
+              "label" : "slop",
+              "type" : "number"
+            }, {
+              "labelLocalized" : "Boost",
+              "defaultValue" : 1,
+              "name" : "boost",
+              "typeOptions" : {
+                "min" : 0
+              },
+              "label" : "boost",
+              "type" : "number"
+            }, {
+              "helpTextLocalized" : "If this is set, the search terms entered in the search bar will be replaced by this value.",
+              "helpText" : "text-to-match-field-help",
+              "labelLocalized" : "Text to Match",
+              "name" : "keywords",
+              "typeOptions" : {
+                "required" : false
+              },
+              "label" : "text-to-match",
+              "type" : "keywords"
+            } ]
+          } ]
+        },
+        "configuration" : {
+          "queryConfiguration" : {
+            "queryEntries" : [ {
+              "clauses" : [ {
+                "occur" : "must",
+                "query" : {
+                  "multi_match" : {
+                    "fuzziness" : "${configuration.fuzziness}",
+                    "query" : "${configuration.keywords}",
+                    "minimum_should_match" : "${configuration.minimum_should_match}",
+                    "boost" : "${configuration.boost}",
+                    "fields" : "${configuration.fields}",
+                    "type" : "${configuration.type}",
+                    "operator" : "${configuration.operator}",
+                    "slop" : "${configuration.slop}"
+                  }
+                },
+                "context" : "query"
+              } ]
+            } ]
+          }
+        },
+        "icon" : "picture",
+        "category" : "match"
+      }
+    },
+    "configurationEntry" : {
+      "queryConfiguration" : {
+        "queryEntries" : [ {
+          "clauses" : [ {
+            "occur" : "must",
+            "query" : {
+              "multi_match" : {
+                "fuzziness" : "AUTO",
+                "query" : "${keywords}",
+                "minimum_should_match" : "0",
+                "boost" : 1,
+                "fields" : [ "content_${context.language_id}^1" ],
+                "type" : "best_fields",
+                "operator" : "or"
+              }
+            },
+            "context" : "query"
+          } ]
+        } ]
+      }
+    },
+    "uiConfigurationValues" : {
+      "fuzziness" : "AUTO",
+      "keywords" : "",
+      "minimum_should_match" : "0",
+      "boost" : 1,
+      "fields" : [ {
+        "field" : "content",
+        "boost" : 1,
+        "locale" : "${context.language_id}"
+      } ],
+      "type" : "best_fields",
+      "operator" : "or",
+      "slop" : ""
+    }
+  }, {
+    "sxpElement" : {
+      "schemaVersion" : "1.0",
+      "title_i18n" : {
+        "en-US" : "Search By Text Embedding"
+      },
+      "description" : "Search by text embedding.",
+      "readOnly" : false,
+      "title" : "Search By Text Embedding",
+      "type" : 0,
+      "userName" : "Test Test",
+      "version" : "1.6",
+      "externalReferenceCode" : "56c2ce12-2fa6-9c32-19ee-5b03d833f58e",
+      "description_i18n" : {
+        "en-US" : "Search by text embedding."
+      },
+      "modifiedDate" : "2024-11-12T00:10:07Z",
+      "id" : 103,
+      "createDate" : "2024-11-10T04:57:47Z",
+      "elementDefinition" : {
+        "uiConfiguration" : {
+          "fieldSets" : [ {
+            "fields" : [ {
+              "labelLocalized" : "Entry Class Names",
+              "name" : "entry_class_names",
+              "label" : "Entry Class Names",
+              "type" : "multiselect"
+            }, {
+              "labelLocalized" : "Boost",
+              "defaultValue" : 1,
+              "name" : "boost",
+              "typeOptions" : {
+                "min" : 0
+              },
+              "label" : "Boost",
+              "type" : "number"
+            }, {
+              "labelLocalized" : "Min Score",
+              "defaultValue" : 1.5,
+              "name" : "min_score",
+              "typeOptions" : {
+                "min" : 0
+              },
+              "label" : "Min Score",
+              "type" : "number"
+            }, {
+              "helpTextLocalized" : "Specify the vector function for measuring similarity between the text embeddings of the search keywords and target documents. Check the model's documentation for suitability.",
+              "helpText" : "Specify the vector function for measuring similarity between the text embeddings of the search keywords and target documents. Check the model's documentation for suitability.",
+              "labelLocalized" : "Vector Field Function",
+              "defaultValue" : "cosineSimilarity",
+              "name" : "vector_field_function",
+              "typeOptions" : {
+                "nullable" : false,
+                "options" : [ {
+                  "label" : "Cosine Similarity",
+                  "value" : "cosineSimilarity"
+                }, {
+                  "label" : "Dot Product",
+                  "value" : "dotProduct"
+                } ]
+              },
+              "label" : "Vector Field Function",
+              "type" : "select"
+            } ]
+          } ]
+        },
+        "configuration" : {
+          "queryConfiguration" : {
+            "queryEntries" : [ {
+              "condition" : {
+                "exists" : {
+                  "parameterName" : "keywords"
+                }
+              },
+              "clauses" : [ {
+                "occur" : "must",
+                "query" : {
+                  "script_score" : {
+                    "query" : {
+                      "bool" : {
+                        "filter" : [ {
+                          "bool" : {
+                            "should" : [ {
+                              "bool" : {
+                                "must_not" : [ {
+                                  "exists" : {
+                                    "field" : "hidden"
+                                  }
+                                } ]
+                              }
+                            }, {
+                              "bool" : {
+                                "must" : [ {
+                                  "term" : {
+                                    "hidden" : false
+                                  }
+                                } ]
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "should" : [ {
+                              "bool" : {
+                                "must_not" : [ {
+                                  "exists" : {
+                                    "field" : "displayDate"
+                                  }
+                                } ]
+                              }
+                            }, {
+                              "bool" : {
+                                "must_not" : [ {
+                                  "exists" : {
+                                    "field" : "expirationDate"
+                                  }
+                                } ],
+                                "must" : [ {
+                                  "range" : {
+                                    "displayDate_sortable" : {
+                                      "include_lower" : true,
+                                      "include_upper" : true,
+                                      "from" : "-9223372036854775808",
+                                      "to" : "${time.current_date|date_format=timestamp}"
+                                    }
+                                  }
+                                } ]
+                              }
+                            }, {
+                              "bool" : {
+                                "must" : [ {
+                                  "range" : {
+                                    "displayDate_sortable" : {
+                                      "include_lower" : true,
+                                      "include_upper" : true,
+                                      "from" : "-9223372036854775808",
+                                      "to" : "${time.current_date|date_format=timestamp}"
+                                    }
+                                  }
+                                }, {
+                                  "range" : {
+                                    "expirationDate_sortable" : {
+                                      "include_lower" : true,
+                                      "include_upper" : true,
+                                      "from" : "${time.current_date|date_format=timestamp}",
+                                      "to" : "9223372036854775807"
+                                    }
+                                  }
+                                } ]
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "should" : [ {
+                              "bool" : {
+                                "must_not" : [ {
+                                  "term" : {
+                                    "entryClassName" : {
+                                      "value" : "com.liferay.journal.model.JournalArticle"
+                                    }
+                                  }
+                                } ]
+                              }
+                            }, {
+                              "bool" : {
+                                "must" : [ {
+                                  "term" : {
+                                    "entryClassName" : {
+                                      "value" : "com.liferay.journal.model.JournalArticle"
+                                    }
+                                  }
+                                }, {
+                                  "term" : {
+                                    "head" : {
+                                      "value" : true
+                                    }
+                                  }
+                                } ]
+                              }
+                            } ]
+                          }
+                        }, {
+                          "terms" : {
+                            "entryClassName" : [ "com.liferay.journal.model.JournalArticle" ]
+                          }
+                        }, {
+                          "term" : {
+                            "status" : {
+                              "value" : 0
+                            }
+                          }
+                        }, {
+                          "exists" : {
+                            "field" : "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}"
+                          }
+                        } ]
+                      }
+                    },
+                    "boost" : 1,
+                    "min_score" : 1.5,
+                    "script" : {
+                      "source" : "cosineSimilarity(params.query_vector, 'text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}')  + 1.0",
+                      "params" : {
+                        "query_vector" : "${ml.text_embeddings.keywords_embedding}"
+                      }
+                    }
+                  }
+                },
+                "context" : "query"
+              } ]
+            } ]
+          }
+        },
+        "icon" : "custom-field",
+        "category" : "semantic search"
+      }
+    },
+    "configurationEntry" : {
+      "queryConfiguration" : {
+        "queryEntries" : [ {
+          "condition" : {
+            "exists" : {
+              "parameterName" : "keywords"
+            }
+          },
+          "clauses" : [ {
+            "occur" : "must",
+            "query" : {
+              "script_score" : {
+                "query" : {
+                  "bool" : {
+                    "filter" : [ {
+                      "bool" : {
+                        "should" : [ {
+                          "bool" : {
+                            "must_not" : [ {
+                              "exists" : {
+                                "field" : "hidden"
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "must" : [ {
+                              "term" : {
+                                "hidden" : false
+                              }
+                            } ]
+                          }
+                        } ]
+                      }
+                    }, {
+                      "bool" : {
+                        "should" : [ {
+                          "bool" : {
+                            "must_not" : [ {
+                              "exists" : {
+                                "field" : "displayDate"
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "must_not" : [ {
+                              "exists" : {
+                                "field" : "expirationDate"
+                              }
+                            } ],
+                            "must" : [ {
+                              "range" : {
+                                "displayDate_sortable" : {
+                                  "include_lower" : true,
+                                  "include_upper" : true,
+                                  "from" : "-9223372036854775808",
+                                  "to" : "${time.current_date|date_format=timestamp}"
+                                }
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "must" : [ {
+                              "range" : {
+                                "displayDate_sortable" : {
+                                  "include_lower" : true,
+                                  "include_upper" : true,
+                                  "from" : "-9223372036854775808",
+                                  "to" : "${time.current_date|date_format=timestamp}"
+                                }
+                              }
+                            }, {
+                              "range" : {
+                                "expirationDate_sortable" : {
+                                  "include_lower" : true,
+                                  "include_upper" : true,
+                                  "from" : "${time.current_date|date_format=timestamp}",
+                                  "to" : "9223372036854775807"
+                                }
+                              }
+                            } ]
+                          }
+                        } ]
+                      }
+                    }, {
+                      "bool" : {
+                        "should" : [ {
+                          "bool" : {
+                            "must_not" : [ {
+                              "term" : {
+                                "entryClassName" : {
+                                  "value" : "com.liferay.journal.model.JournalArticle"
+                                }
+                              }
+                            } ]
+                          }
+                        }, {
+                          "bool" : {
+                            "must" : [ {
+                              "term" : {
+                                "entryClassName" : {
+                                  "value" : "com.liferay.journal.model.JournalArticle"
+                                }
+                              }
+                            }, {
+                              "term" : {
+                                "head" : {
+                                  "value" : true
+                                }
+                              }
+                            } ]
+                          }
+                        } ]
+                      }
+                    }, {
+                      "terms" : {
+                        "entryClassName" : [ "com.liferay.journal.model.JournalArticle" ]
+                      }
+                    }, {
+                      "term" : {
+                        "status" : {
+                          "value" : 0
+                        }
+                      }
+                    }, {
+                      "exists" : {
+                        "field" : "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}"
+                      }
+                    } ]
+                  }
+                },
+                "boost" : 1,
+                "min_score" : 1.5,
+                "script" : {
+                  "source" : "cosineSimilarity(params.query_vector, 'text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}')  + 1.0",
+                  "params" : {
+                    "query_vector" : "${ml.text_embeddings.keywords_embedding}"
+                  }
+                }
+              }
+            },
+            "context" : "query"
+          } ]
+        } ]
+      }
+    },
+    "uiConfigurationValues" : {
+      "entry_class_names" : [ {
+        "label" : "com.liferay.journal.model.JournalArticle",
+        "value" : "com.liferay.journal.model.JournalArticle",
+        "key" : "key_1"
+      } ],
+      "boost" : 1,
+      "vector_field_function" : "cosineSimilarity",
+      "min_score" : 1.5
+    }
+  } ],
+  "externalReferenceCode" : "hybrid_approach"
+}

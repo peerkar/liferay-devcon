@@ -1,0 +1,237 @@
+{
+  "schemaVersion" : "1.1",
+  "title_i18n" : {
+    "en_US" : "Standard search with rescore"
+  },
+  "configuration" : {
+    "highlightConfiguration" : { },
+    "indexConfiguration" : {
+      "external" : false,
+      "indexName" : ""
+    },
+    "parameterConfiguration" : { },
+    "aggregationConfiguration" : { },
+    "generalConfiguration" : {
+      "searchableAssetTypes" : [ ],
+      "clauseContributorsExcludes" : [ ],
+      "clauseContributorsIncludes" : [ "*" ]
+    },
+    "advancedConfiguration" : { },
+    "sortConfiguration" : { },
+    "queryConfiguration" : {
+      "applyIndexerClauses" : true
+    }
+  },
+  "description_i18n" : {
+    "en_US" : "This is the demonstrating the standard search with rescore -approach."
+  },
+  "elementInstances" : [ {
+    "sxpElement" : {
+      "schemaVersion" : "1.0",
+      "title_i18n" : {
+        "en-US" : "rescore-by-text-embedding"
+      },
+      "description" : "Rescore the results of the original query using the text embedding value. This element is effective only if the text embeddings are enabled and configured to operate on specific content types and languages. See the Search Experiences entry in System Settings.",
+      "readOnly" : false,
+      "title" : "Rescore by Text Embedding",
+      "type" : 0,
+      "userName" : "Test Test",
+      "version" : "1.0",
+      "externalReferenceCode" : "e364323c-d35d-be5f-5890-233cb452ee35",
+      "description_i18n" : {
+        "en-US" : "rescore-by-text-embedding-description"
+      },
+      "modifiedDate" : "2024-11-10T04:54:51Z",
+      "id" : 102,
+      "createDate" : "2024-11-10T04:54:51Z",
+      "elementDefinition" : {
+        "uiConfiguration" : {
+          "fieldSets" : [ {
+            "fields" : [ {
+              "labelLocalized" : "Boost",
+              "defaultValue" : 10,
+              "name" : "boost",
+              "typeOptions" : {
+                "min" : 0
+              },
+              "label" : "boost",
+              "type" : "number"
+            }, {
+              "helpTextLocalized" : "Set the minimum score for a result to be rescored.",
+              "helpText" : "min-score-field-help",
+              "labelLocalized" : "Min Score",
+              "defaultValue" : 1,
+              "name" : "min_score",
+              "typeOptions" : {
+                "min" : 0
+              },
+              "label" : "min-score",
+              "type" : "number"
+            }, {
+              "helpTextLocalized" : "Set the weight of the original query to determine its importance in the final score calculation.",
+              "helpText" : "query-weight-field-help",
+              "labelLocalized" : "Query Weight",
+              "defaultValue" : 0.01,
+              "name" : "query_weight",
+              "typeOptions" : {
+                "min" : 0.01,
+                "step" : 0.1
+              },
+              "label" : "query-weight",
+              "type" : "slider"
+            }, {
+              "helpTextLocalized" : "Set the weight of the rescore query to determine its importance in the final score calculation.",
+              "helpText" : "rescore-query-weight-field-help",
+              "labelLocalized" : "Rescore Query Weight",
+              "defaultValue" : 10,
+              "name" : "rescore_query_weight",
+              "typeOptions" : {
+                "min" : 0.01,
+                "step" : 0.1
+              },
+              "label" : "rescore-query-weight",
+              "type" : "slider"
+            }, {
+              "helpTextLocalized" : "Choose how the original and rescore query scores are combined when calculating the final score.",
+              "helpText" : "score-mode-field-help",
+              "labelLocalized" : "Score Mode",
+              "defaultValue" : "avg",
+              "name" : "score_mode",
+              "typeOptions" : {
+                "nullable" : false,
+                "options" : [ {
+                  "label" : "Average",
+                  "value" : "avg"
+                }, {
+                  "label" : "Max",
+                  "value" : "max"
+                }, {
+                  "label" : "Min",
+                  "value" : "min"
+                }, {
+                  "label" : "Multiply",
+                  "value" : "multiply"
+                }, {
+                  "label" : "Total",
+                  "value" : "total"
+                } ]
+              },
+              "label" : "score-mode",
+              "type" : "select"
+            }, {
+              "helpTextLocalized" : "Set the number of top results from the original query to rescore.",
+              "helpText" : "rescore-window-size-field-help",
+              "labelLocalized" : "Rescore Window Size",
+              "defaultValue" : 50,
+              "name" : "window_size",
+              "typeOptions" : {
+                "min" : 1
+              },
+              "label" : "rescore-window-size",
+              "type" : "number"
+            } ]
+          } ]
+        },
+        "configuration" : {
+          "queryConfiguration" : {
+            "queryEntries" : [ {
+              "condition" : {
+                "exists" : {
+                  "parameterName" : "keywords"
+                }
+              },
+              "rescores" : [ {
+                "queryWeight" : "${configuration.query_weight}",
+                "rescoreQueryWeight" : "${configuration.rescore_query_weight}",
+                "windowSize" : "${configuration.window_size}",
+                "query" : {
+                  "script_score" : {
+                    "query" : {
+                      "bool" : {
+                        "filter" : [ {
+                          "exists" : {
+                            "field" : "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}"
+                          }
+                        } ],
+                        "must" : [ {
+                          "match_all" : { }
+                        } ]
+                      }
+                    },
+                    "boost" : "${configuration.boost}",
+                    "min_score" : "${configuration.min_score}",
+                    "script" : {
+                      "source" : "knn_score",
+                      "lang" : "knn",
+                      "params" : {
+                        "field" : "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}",
+                        "space_type" : "cosinesimil",
+                        "query_value" : "${ml.text_embeddings.keywords_embedding}"
+                      }
+                    }
+                  }
+                },
+                "scoreMode" : "${configuration.score_mode}"
+              } ]
+            } ]
+          }
+        },
+        "icon" : "custom-field",
+        "category" : "semantic search"
+      }
+    },
+    "configurationEntry" : {
+      "queryConfiguration" : {
+        "queryEntries" : [ {
+          "condition" : {
+            "exists" : {
+              "parameterName" : "keywords"
+            }
+          },
+          "rescores" : [ {
+            "queryWeight" : 0.01,
+            "rescoreQueryWeight" : 10,
+            "windowSize" : 50,
+            "query" : {
+              "script_score" : {
+                "query" : {
+                  "bool" : {
+                    "filter" : [ {
+                      "exists" : {
+                        "field" : "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}"
+                      }
+                    } ],
+                    "must" : [ {
+                      "match_all" : { }
+                    } ]
+                  }
+                },
+                "boost" : 10,
+                "min_score" : 1,
+                "script" : {
+                  "source" : "knn_score",
+                  "lang" : "knn",
+                  "params" : {
+                    "field" : "text_embedding_${ml.text_embeddings.vector_dimensions}_${context.language_id}",
+                    "space_type" : "cosinesimil",
+                    "query_value" : "${ml.text_embeddings.keywords_embedding}"
+                  }
+                }
+              }
+            },
+            "scoreMode" : "avg"
+          } ]
+        } ]
+      }
+    },
+    "uiConfigurationValues" : {
+      "window_size" : 50,
+      "score_mode" : "avg",
+      "rescore_query_weight" : 10,
+      "boost" : 10,
+      "query_weight" : 0.01,
+      "min_score" : 1
+    }
+  } ],
+  "externalReferenceCode" : "rescore"
+}
