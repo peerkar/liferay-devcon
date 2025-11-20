@@ -30,7 +30,9 @@ To verify that it’s running, go to: http://localhost:8080/o/mcp/sse
 ```
 
 3. Click the tools button in the chat box:
+
 ![Tools Button](tools.png)
+
 4. Check the `MCP Server: liferay`
 5. Start chatting f.ex `list Liferay instances` 
 
