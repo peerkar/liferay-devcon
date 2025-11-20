@@ -2,7 +2,7 @@
 
 Here are additional resources to the DevCon talk *Making Liferay "AI ready" through an MCP Server*. The slides and the presentation resources can be found [here](https://github.com/4lejandrito/liferay-devcon-2025-mcp).
 
-The examples below are using the default test user account with the basic auth.
+The examples below are using the default test user account with Basic auth.
 
 ## Setting Up the Liferay MCP Server
 
@@ -68,8 +68,6 @@ To see alternative way of configuring MCP servers see the [VSCode documentation]
 6. Check the connection by entering `/mcp list`. You should see the Liferay MCP server green and the three tools listed.
 7. Start prompting f.ex. `list liferay instances`
 
-
-
 ## Example Liferay Prompts for VSCode
 
 1. Clone this repo
@@ -77,3 +75,5 @@ To see alternative way of configuring MCP servers see the [VSCode documentation]
 1. Start chatting with `/` and the VSCode will autocomplete
 
 Please notice that the prompt number 5 relies on the Jira MCP server configured as well. 
+
+See a collection of other VSCode prompt examples [here](https://github.com/github/awesome-copilot/tree/main/prompts).
